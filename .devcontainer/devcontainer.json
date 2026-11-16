@@ -1,27 +1,16 @@
 {
-    "name": "RCC",
-    "build": {
-        "dockerfile": "Dockerfile"
-    },
-    "remoteUser": "root",
-    "customizations": {
-        "vscode": {
-            "extensions": [
-                "dbaeumer.vscode-eslint",
-                "esbenp.prettier-vscode",
-                "bradlc.vscode-tailwindcss",
-                "ms-vscode.vscode-typescript-next",
-                "ms-azuretools.vscode-docker"
-            ]
-        }
-    },
+    "name": "RCC Development",
+
+    "dockerComposeFile": "../compose.yaml",
+
+    "service": "app",
+
+    "workspaceFolder": "/workspace",
+
+    "shutdownAction": "stopCompose",
+
     "forwardPorts": [
-        3000
-    ],
-    "portsAttributes": {
-        "3000": {
-            "label": "RCC",
-            "onAutoForward": "notify"
-        }
-    }
+        3000,
+        5432
+    ]
 }

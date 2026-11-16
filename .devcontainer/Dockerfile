@@ -1,6 +1,5 @@
 FROM node:22-bookworm
 
-
 WORKDIR /workspace
 
 RUN apt-get update \
@@ -9,5 +8,3 @@ RUN apt-get update \
         curl \
         postgresql-client \
     && rm -rf /var/lib/apt/lists/*
-
-CMD ["sleep", "infinity"]

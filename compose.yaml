@@ -1,0 +1,41 @@
+services:
+
+  app:
+    build:
+      context: .devcontainer
+      dockerfile: Dockerfile
+
+    volumes:
+      - .:/workspace:cached
+
+    command: sleep infinity
+
+    environment:
+      DATABASE_URL: postgresql://rcc:rcc_dev_password@db:5432/rcc
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:17-bookworm
+
+    environment:
+      POSTGRES_DB: rcc
+      POSTGRES_USER: rcc
+      POSTGRES_PASSWORD: rcc_dev_password
+
+    volumes:
+      - rcc_postgres_data:/var/lib/postgresql/data
+
+    ports:
+      - "5432:5432"
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rcc -d rcc"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  rcc_postgres_data:
