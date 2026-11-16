@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#6543ad">
+    <title>Crear cuenta · RCC</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script type="module" src="/js/register.js"></script>
+</head>
+<body class="auth-page">
+    <main class="auth-layout">
+        <section class="brand-panel" aria-label="RCC">
+            <a class="brand" href="/" aria-label="RCC, inicio"><span class="brand-symbol" aria-hidden="true">+</span> RCC</a>
+            <div class="brand-copy"><p class="eyebrow">TU BIENESTAR, DÍA A DÍA</p>
+                <h1>Un espacio para<br>cuidar de ti.</h1>
+                <p>Tu salud merece tiempo, atención y un lugar propio.</p>
+                <div class="brand-art" aria-hidden="true"><span>+</span><i></i><b></b></div>
+            </div>
+            <p class="brand-footer">Cada día es un nuevo comienzo.</p>
+        </section>
+        <section class="form-panel" aria-labelledby="form-title">
+            <div class="auth-card">
+                <p class="eyebrow">EMPIEZA CON RCC</p>
+                <h2 id="form-title">Crea tu cuenta</h2>
+                <p class="muted">Un primer paso para acompañar tu bienestar.</p>
+                <p id="session-status" class="status" role="status">Comprobando sesión…</p>
+                <p id="error" class="error" role="alert" hidden></p>
+                <button id="retry" class="secondary-button" type="button" hidden>Volver a intentar</button>
+                <form method="post" action="/api/auth/register">
+                    <fieldset disabled>
+                    <legend class="sr-only">Crear cuenta</legend>
+                    <label for="displayName">Nombre</label>
+                    <input id="displayName" name="displayName" autocomplete="name" required>
+                    <label for="username">Usuario</label>
+                    <input id="username" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required minlength="3" maxlength="50" pattern="[A-Za-z0-9._\-]{3,50}" aria-describedby="username-help">
+                    <p class="field-help" id="username-help">Entre 3 y 50 letras, números, puntos, guiones o guiones bajos.</p>
+                    <label for="password">Contraseña</label>
+                    <input id="password" name="password" type="password" autocomplete="new-password" required aria-describedby="password-help">
+                    <p class="field-help" id="password-help">Al menos 10 caracteres. Máximo 72 bytes; los acentos y emojis ocupan más espacio.</p>
+                    <label for="confirmPassword">Confirmar contraseña</label>
+                    <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" required>
+                    <button class="primary-button" type="submit">Crear cuenta</button>
+                    </fieldset>
+                </form>
+                <p class="auth-switch">¿Ya tienes una cuenta? <a href="/login">Iniciar sesión</a></p>
+                <noscript><p class="error">Activa JavaScript para acceder a RCC.</p></noscript>
+            </div>
+            <p class="form-footer">RCC · Tu espacio de bienestar</p>
+        </section>
+    </main>
+</body>
+</html>

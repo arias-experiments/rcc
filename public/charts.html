@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#6543ad">
+    <title>Gráficas · RCC</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script type="module" src="/js/charts.js"></script>
+</head>
+<body class="app-page">
+    <p id="loading" class="loading" role="status">Cargando tu espacio…</p>
+    <p id="error" class="error app-error" role="alert" hidden></p>
+    <button id="retry" class="secondary-button" type="button" hidden>Volver a intentar</button>
+    <noscript><p class="error">Activa JavaScript para acceder a RCC.</p></noscript>
+    <div id="app" class="app-layout" hidden>
+        <aside class="sidebar">
+            <a class="brand" href="/" aria-label="RCC, inicio"><span class="brand-symbol" aria-hidden="true">+</span> RCC</a>
+            <p class="nav-heading">MI ESPACIO</p>
+            <nav aria-label="Navegación principal">
+                <a class="nav-item" href="/"><span aria-hidden="true">▦</span> Registro</a>
+                <a class="nav-item" href="/historial"><span aria-hidden="true">◷</span> Historial</a>
+                <a class="nav-item active" href="/graficas" aria-current="page"><span aria-hidden="true">▥</span> Gráficas</a>
+                <button class="nav-item settings" type="button" disabled><span aria-hidden="true">⚙</span> Ajustes</button>
+            </nav>
+            <p class="nav-note">Próximamente</p>
+            <div class="sidebar-user">
+                <span class="avatar" aria-hidden="true">♡</span>
+                <div class="user-details"><span data-display-name></span><button id="logout" type="button">Cerrar sesión</button></div>
+            </div>
+        </aside>
+        <main class="main-content">
+            <header class="app-header"><p>Tu espacio personal</p><span class="header-tag">RCC</span></header>
+            <section class="history-heading"><p class="eyebrow">TUS REGISTROS A LO LARGO DEL TIEMPO</p><h1>Gráficas</h1><p class="muted">Explora tus mediciones y síntomas por período.</p></section>
+            <section class="record-card period-card" aria-label="Período de los registros">
+                <fieldset id="period-controls"><legend>Período</legend><div class="period-options">
+                    <label><input type="radio" name="period" value="7"><span>7 días</span></label>
+                    <label><input type="radio" name="period" value="30" checked><span>30 días</span></label>
+                    <label><input type="radio" name="period" value="90"><span>90 días</span></label>
+                    <label><input type="radio" name="period" value="all"><span>Todo</span></label>
+                    <label><input type="radio" name="period" value="custom"><span>Personalizado</span></label>
+                </div></fieldset>
+                <div id="custom-dates" class="custom-dates" hidden><div><label for="date-from">Desde</label><input type="date" id="date-from" aria-describedby="period-error"></div><div><label for="date-to">Hasta</label><input type="date" id="date-to" aria-describedby="period-error"></div></div>
+                <p id="period-error" class="field-error" role="alert" hidden></p>
+            </section>
+            <p id="charts-loading" class="status" role="status">Cargando gráficas…</p>
+            <section id="charts-error" class="record-card" aria-label="Error al cargar" hidden><p id="charts-error-message" class="error" role="alert"></p><button id="charts-retry" type="button" class="secondary-button">Volver a intentar</button></section>
+            <div id="charts-content" hidden>
+                <section class="summary-grid" aria-label="Resumen del período" aria-live="polite" aria-atomic="true">
+                    <div class="record-card summary-card"><h2>Registros</h2><p id="summary-count">0</p></div>
+                    <div class="record-card summary-card"><h2>Glicemia promedio</h2><p><span id="summary-glicemia">—</span> <small>mg/dL</small></p></div>
+                    <div class="record-card summary-card"><h2>Cetonemia promedio</h2><p><span id="summary-cetonemia">—</span> <small>mmol/L</small></p></div>
+                    <div class="record-card summary-card"><h2>Ayuno promedio</h2><p><span id="summary-horasAyuno">—</span> <small>h</small></p></div>
+                </section>
+                <section id="charts-empty" class="record-card history-empty" hidden><h2>No hay registros en este período.</h2><p class="muted">Prueba con un período más amplio o agrega un nuevo registro.</p><a class="primary-button button-link" href="/">Ir a Registro diario</a></section>
+                <div id="chart-panels" class="chart-panels">
+                    <section class="record-card chart-card" aria-labelledby="glicemia-title">
+                        <h2 id="glicemia-title">Glicemia <small>mg/dL</small></h2><p id="glicemia-description" class="chart-description" aria-live="polite"></p>
+                        <p id="glicemia-empty" class="chart-empty" hidden></p><div id="glicemia-plot" class="chart-plot"><canvas id="glicemia-chart" role="img" aria-label="Glicemia en el tiempo, mg/dL" aria-describedby="glicemia-description">Gráfica de glicemia en el tiempo.</canvas></div>
+                    </section>
+                    <section class="record-card chart-card" aria-labelledby="cetonemia-title">
+                        <h2 id="cetonemia-title">Cetonemia <small>mmol/L</small></h2><p id="cetonemia-description" class="chart-description" aria-live="polite"></p>
+                        <p id="cetonemia-empty" class="chart-empty" hidden></p><div id="cetonemia-plot" class="chart-plot"><canvas id="cetonemia-chart" role="img" aria-label="Cetonemia en el tiempo, mmol/L" aria-describedby="cetonemia-description">Gráfica de cetonemia en el tiempo.</canvas></div>
+                    </section>
+                    <section class="record-card chart-card" aria-labelledby="horasAyuno-title">
+                        <h2 id="horasAyuno-title">Horas de ayuno <small>h</small></h2><p id="horasAyuno-description" class="chart-description" aria-live="polite"></p>
+                        <p id="horasAyuno-empty" class="chart-empty" hidden></p><div id="horasAyuno-plot" class="chart-plot"><canvas id="horasAyuno-chart" role="img" aria-label="Horas de ayuno en el tiempo, h" aria-describedby="horasAyuno-description">Gráfica de horas de ayuno en el tiempo.</canvas></div>
+                    </section>
+                    <section class="record-card chart-card" aria-labelledby="symptom-title">
+                        <div class="chart-heading"><h2 id="symptom-title">Síntomas <small>1–5</small></h2><div><label for="symptom-select">Síntoma</label><select id="symptom-select"><option value="dolor">Dolor</option><option value="anergia">Anergia</option><option value="fatiga" selected>Fatiga</option><option value="inatencion">Inatención</option><option value="estres">Estrés</option><option value="somnolencia">Somnolencia</option><option value="insomnio">Insomnio</option></select></div></div>
+                        <p id="symptom-description" class="chart-description" aria-live="polite"></p><p id="symptom-empty" class="chart-empty" hidden></p><div id="symptom-plot" class="chart-plot"><canvas id="symptom-chart" role="img" aria-label="Fatiga en el tiempo, escala de 1 a 5" aria-describedby="symptom-description">Gráfica del síntoma seleccionado.</canvas></div>
+                    </section>
+                    <section class="record-card chart-card" aria-labelledby="comparison-title">
+                        <div class="chart-heading"><h2 id="comparison-title">Comparaciones</h2><div><label for="comparison-select">Comparación</label><select id="comparison-select"><option value="fasting-glucose">Ayuno vs Glicemia</option><option value="fasting-ketones">Ayuno vs Cetonemia</option><option value="glucose-ketones">Glicemia vs Cetonemia</option></select></div></div>
+                        <p id="comparison-description" class="chart-description" aria-live="polite"></p><p id="comparison-empty" class="chart-empty" hidden></p><div id="comparison-plot" class="chart-plot scatter-plot"><canvas id="comparison-chart" role="img" aria-label="Ayuno en horas frente a glicemia en mg/dL" aria-describedby="comparison-description">Gráfica de dispersión de la comparación seleccionada.</canvas></div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

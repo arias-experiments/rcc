@@ -1,5 +1,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
+import { fileURLToPath } from "node:url";
+import path from "node:path";
 import authRouter from "./routes/auth.js";
 import healthRouter from "./routes/health.js";
 import recordsRouter from "./routes/records.js";
@@ -9,12 +11,15 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-app.get("/", (req, res) => {
-    res.json({
-        name: "RCC API",
-        status: "running"
+const publicDirectory = fileURLToPath(new URL("../public/", import.meta.url));
+
+for (const [route, file] of [["/", "index.html"], ["/login", "login.html"], ["/register", "register.html"], ["/historial", "history.html"], ["/graficas", "charts.html"]]) {
+    app.get(route, (req, res) => {
+        res.set("Cache-Control", "no-store");
+        res.sendFile(path.join(publicDirectory, file));
     });
-});
+}
+app.use(express.static(publicDirectory, { index: false }));
 
 app.use("/api/health", healthRouter);
 app.use("/api/auth", authRouter);

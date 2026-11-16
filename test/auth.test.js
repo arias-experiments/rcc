@@ -57,10 +57,11 @@ test("authentication with real PostgreSQL sessions", async (t) => {
         }
     });
 
-    await t.test("Phase 1 root and database health still work", async () => {
-        const root = await request("/");
+    await t.test("Phase 4 app shell and Phase 1 database health work", async () => {
+        const root = await fetch(`${base}/`);
         assert.equal(root.status, 200);
-        assert.deepEqual(root.body, { name: "RCC API", status: "running" });
+        assert.match(root.headers.get("content-type"), /text\/html/);
+        assert.match(await root.text(), /Registro diario/);
         const health = await request("/api/health");
         assert.equal(health.status, 200);
         assert.equal(health.body.database, "connected");

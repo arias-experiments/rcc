@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#6543ad">
+    <title>Registro diario · RCC</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script type="module" src="/js/dashboard.js"></script>
+</head>
+<body class="app-page">
+    <p id="loading" class="loading" role="status">Cargando tu espacio…</p>
+    <p id="error" class="error app-error" role="alert" hidden></p>
+    <button id="retry" class="secondary-button" type="button" hidden>Volver a intentar</button>
+    <noscript><p class="error">Activa JavaScript para acceder a RCC.</p></noscript>
+    <div id="app" class="app-layout" hidden>
+        <aside class="sidebar">
+            <a class="brand" href="/" aria-label="RCC, inicio"><span class="brand-symbol" aria-hidden="true">+</span> RCC</a>
+            <p class="nav-heading">MI ESPACIO</p>
+            <nav aria-label="Navegación principal">
+                <a class="nav-item active" href="/" aria-current="page"><span aria-hidden="true">▦</span> Registro</a>
+                <a class="nav-item" href="/historial"><span aria-hidden="true">◷</span> Historial</a>
+                <a class="nav-item" href="/graficas"><span aria-hidden="true">▥</span> Gráficas</a>
+                <button class="nav-item settings" type="button" disabled><span aria-hidden="true">⚙</span> Ajustes</button>
+            </nav>
+            <p class="nav-note">Próximamente</p>
+            <div class="sidebar-user">
+                <span class="avatar" aria-hidden="true">♡</span>
+                <div class="user-details"><span data-display-name></span><button id="logout" type="button">Cerrar sesión</button></div>
+            </div>
+        </aside>
+        <main class="main-content">
+            <header class="app-header"><p>Tu espacio personal</p><span class="header-tag">RCC</span></header>
+            <div id="record-editor"></div>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#6543ad">
+    <title>Historial · RCC</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script type="module" src="/js/history.js"></script>
+</head>
+<body class="app-page">
+    <p id="loading" class="loading" role="status">Cargando tu espacio…</p>
+    <p id="error" class="error app-error" role="alert" hidden></p>
+    <button id="retry" class="secondary-button" type="button" hidden>Volver a intentar</button>
+    <noscript><p class="error">Activa JavaScript para acceder a RCC.</p></noscript>
+    <div id="app" class="app-layout" hidden>
+        <aside class="sidebar">
+            <a class="brand" href="/" aria-label="RCC, inicio"><span class="brand-symbol" aria-hidden="true">+</span> RCC</a>
+            <p class="nav-heading">MI ESPACIO</p>
+            <nav aria-label="Navegación principal">
+                <a class="nav-item" href="/"><span aria-hidden="true">▦</span> Registro</a>
+                <a class="nav-item active" href="/historial" aria-current="page"><span aria-hidden="true">◷</span> Historial</a>
+                <a class="nav-item" href="/graficas"><span aria-hidden="true">▥</span> Gráficas</a>
+                <button class="nav-item settings" type="button" disabled><span aria-hidden="true">⚙</span> Ajustes</button>
+            </nav>
+            <p class="nav-note">Próximamente</p>
+            <div class="sidebar-user">
+                <span class="avatar" aria-hidden="true">♡</span>
+                <div class="user-details"><span data-display-name></span><button id="logout" type="button">Cerrar sesión</button></div>
+            </div>
+        </aside>
+        <main class="main-content">
+            <header class="app-header"><p>Tu espacio personal</p><span class="header-tag">RCC</span></header>
+            <section class="history-heading"><p class="eyebrow">TU BIENESTAR, DÍA A DÍA</p><h1 tabindex="-1" id="history-title">Historial</h1><p class="muted">Un espacio para volver a tus registros.</p></section>
+            <p id="history-feedback" class="success-message" role="status" hidden></p>
+            <p id="history-notice" class="error" role="status" hidden></p>
+            <p id="history-loading" class="status" role="status">Cargando registros…</p>
+            <section id="history-error" class="record-card" aria-label="Error al cargar" hidden><p class="error" role="alert">No se pudieron cargar los registros. Inténtalo nuevamente.</p><button id="history-retry" class="secondary-button" type="button">Volver a cargar</button></section>
+            <section id="history-empty" class="record-card history-empty" hidden><span class="card-icon" aria-hidden="true">▦</span><h2>Aún no tienes registros.</h2><p class="muted">Los registros que guardes desde Registro diario aparecerán aquí.</p><a class="primary-button button-link" href="/">Crear primer registro</a></section>
+            <section id="history-list" class="record-card history-list" aria-label="Tus registros" hidden><div class="history-columns" aria-hidden="true"><span>Fecha</span><span>Glicemia</span><span>Cetonemia</span><span>Ayuno</span><span>Síntomas</span></div><div id="history-entries"></div></section>
+        </main>
+    </div>
+    <dialog id="record-dialog" class="record-dialog" aria-labelledby="detail-title">
+        <div class="dialog-heading"><h2 id="detail-title" tabindex="-1">Detalle del registro</h2><button id="detail-close" class="secondary-button" type="button">Cerrar</button></div>
+        <p id="detail-error" class="error" role="alert" hidden></p>
+        <p id="detail-feedback" class="success-message" role="status" hidden></p>
+        <div id="record-detail"></div>
+        <div id="detail-actions" class="record-actions"><button id="delete-record" class="danger-button" type="button">Eliminar</button><button id="edit-record" class="primary-button" type="button">Editar</button></div>
+        <div id="edit-container" hidden></div>
+    </dialog>
+    <dialog id="delete-dialog" class="confirm-dialog" aria-labelledby="delete-title" aria-describedby="delete-description">
+        <h2 id="delete-title">¿Eliminar este registro?</h2><p id="delete-description" class="muted">Esta acción no se puede deshacer.</p>
+        <p id="delete-error" class="error" role="alert" hidden></p>
+        <div class="record-actions"><button id="cancel-delete" class="secondary-button" type="button" autofocus>Cancelar</button><button id="confirm-delete" class="danger-button" type="button">Eliminar</button></div>
+    </dialog>
+</body>
+</html>
